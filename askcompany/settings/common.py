@@ -30,8 +30,10 @@ INSTALLED_APPS = [
 
     # Third Apps
     'debug_toolbar',
+    'bootstrap4',
 
     # Local Apps
+    'accounts',
 ]
 
 MIDDLEWARE = [
@@ -78,8 +80,9 @@ DATABASES = {
     }
 }
 
+AUTH_USER_MODEL = "accounts.User"
 
-# Password validation
+# Password validation+
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
