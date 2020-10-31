@@ -14,6 +14,10 @@ SECRET_KEY = 'n!(0t+)s!v8gc9^9yun2%jldc&cgu4wm76mp#z(5-81-2&c@w9'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+ADMIN = [
+    ('Junyeong Ahn', 'zxzimin@naver.com'),
+]
+
 ALLOWED_HOSTS = []
 
 
@@ -31,6 +35,7 @@ INSTALLED_APPS = [
     # Third Apps
     'debug_toolbar',
     'bootstrap4',
+    'django_pydenticon',
 
     # Local Apps
     'accounts',
@@ -130,3 +135,13 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 INTERNAL_IPS = [
     '127.0.0.1',
 ]
+
+# Email with Send Grid
+SENDGRID_API_KEY = os.environ.get("SENDGRID_API_KEY")
+EMAIL_HOST = 'smtp.sendgrid.net'
+EMAIL_HOST_USER = 'apikey' # this is exactly the value 'apikey'
+EMAIL_HOST_PASSWORD = SENDGRID_API_KEY
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+
+WELCOME_EMAIL_SENDER = "zxzimin@naver.com"
