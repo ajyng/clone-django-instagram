@@ -42,6 +42,7 @@ def profile_edit(request):
             return redirect("profile_edit")
     else:
         form = ProfileForm(instance=request.user)
+        
     return render(request, "accounts/profile_edit_form.html", {
         "form": form,
     })

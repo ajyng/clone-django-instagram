@@ -13,10 +13,6 @@ class Post(models.Model):
     def __str__(self):
         return self.caption
 
-    @property
-    def author_name(self):
-        return f"{self.author.first_name} {self.author.last_name}"
-
     def get_absolute_url(self):
         return reverse("instagram:post_detail", args=[self.pk])
 
