@@ -6,6 +6,11 @@ from .models import Tag, Post
 from django.contrib.auth import get_user_model
 
 @login_required
+def index(request):
+    return render(request, "instagram/index.html", {
+    })
+
+@login_required
 def post_new(request):
     if request.method == 'POST':
         form = PostForm(request.POST, request.FILES)
@@ -33,7 +38,10 @@ def post_detail(request, pk):
 def user_page(request, username):
     page_user = get_object_or_404(get_user_model(), username=username, is_active=True)
     post_list = Post.objects.filter(author=page_user)
+    post_list_count = post_list.count() # 실제 DB에 count 쿼리를 던지게 된다.
+    
     return render(request, "instagram/user_page.html", {
         "page_user": page_user,
         "post_list": post_list,
+        "post_list_count": post_list_count,
     })
