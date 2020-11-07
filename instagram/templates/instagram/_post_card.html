@@ -1,4 +1,4 @@
-{% load instagram_tags %}
+{% load humanize instagram_tags %}
 
 <div class="card">
     <div class="card-header">
@@ -10,23 +10,46 @@
     <div class="card-body">
         <img src="{{ post.photo.url }}" style="width:100%" />
 
-        {% for tag in post.tag_set.all %}
-            <span class="badge badge-primary">
-                #{{ tag.name }}
-            </span>
-        {% endfor %}
+        <div>
+            {% if post|is_like_user:user %}
+                <a href="{% url "instagram:post_unlike" post.pk %}" style="color: inherit;">
+                    <i class="fa fa-heart" aria-hidden="true"></i>
+                </a>
+            {% else %}
+                <a href="{% url "instagram:post_like" post.pk %}" style="color: inherit;">
+                    <i class="fa fa-heart-o" aria-hidden="true"></i>
+                </a>
+            {% endif %}
+        </div>
+
+        <div>
+            {% for tag in post.tag_set.all %}
+                <span class="badge badge-primary">
+                    #{{ tag.name }}
+                </span>
+            {% endfor %}
+        </div>
+        
+        <div class="comment-list mt-3 mb-3">
+            {% for comment in post.comment_set.all %}
+                <div> 
+                    <strong>{{ comment.author }}</strong>
+                    {{ comment.message }}
+                    <small class="text-muted">{{ comment.created_at|naturaltime }}</small>
+                </div>
+            {% endfor %}
+        </div>
+
+        <div>
+            <a href=" {{ post.get_absolute_url }}" class="text-muted">
+                <small>
+                    {{ post.created_at|naturaltime }}
+                </small>
+            </a>
+        </div>
+        
     </div>
     <div class="card-footer">
-
-        {% if post|is_like_user:user %}
-            <a href="{% url "instagram:post_unlike" post.pk %}" style="color: inherit;">
-                <i class="fa fa-heart" aria-hidden="true"></i>
-            </a>
-        {% else %}
-            <a href="{% url "instagram:post_like" post.pk %}" style="color: inherit;">
-                <i class="fa fa-heart-o" aria-hidden="true"></i>
-            </a>
-        {% endif %}
-        
+        <a href="{% url "instagram:comment_new" post.pk %}">댓글 쓰기</a>
     </div>
 </div>
