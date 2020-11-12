@@ -10,7 +10,7 @@ from datetime import timedelta
 
 @login_required
 def index(request):
-    timesince = timezone.now() - timedelta(days=3)
+    timesince = timezone.now() - timedelta(days=14)
     
     post_list = Post.objects.all().filter(
             Q(author__in = request.user.following_set.all()) |
@@ -50,7 +50,9 @@ def post_new(request):
 
 def post_detail(request, pk):
     post = get_object_or_404(Post, pk=pk)
+    comment_form = CommentForm()
     return render(request, "instagram/post_detail.html", {
+        "comment_form": comment_form,
         "post": post,
     })
 
