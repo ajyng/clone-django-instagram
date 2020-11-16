@@ -24,9 +24,12 @@ def index(request):
         .exclude(pk=request.user.pk)\
         .exclude(pk__in=request.user.following_set.all())[:3]
 
+    comment_form = CommentForm()
+
     return render(request, "instagram/index.html", {
         "post_list":post_list,
         "suggested_user_list":suggested_user_list,
+        "comment_form":comment_form,
     })
 
 @login_required
